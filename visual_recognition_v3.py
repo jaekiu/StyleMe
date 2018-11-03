@@ -25,7 +25,6 @@ for i in filelist:
             #print(json.dumps(classes, indent=2))
             thisItem = classes['images'][0].get('classifiers')[0].get('classes')
             if len(thisItem) > 1:
-                print("!!!")
                 macks = 0
                 thing = {}
                 for d in thisItem:
@@ -33,7 +32,7 @@ for i in filelist:
                     if macks == d['score']:
                         thing = d
                 thisItem = [thing]
-            clothes.append(thisItem)
+            clothes.append(thisItem[0])
             #clothes.append([])
 
 for c in clothes:
