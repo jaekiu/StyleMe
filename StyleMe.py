@@ -1,10 +1,8 @@
-from pprint import pprint
 import requests
 import numpy as np
 from visual_recognition_v3 import visRec
 import random
 import cv2
-import keyboard
 
 # StyleMe v1.0.0
 # By Sahil Sanghvi and Jacqueline Zhang
@@ -89,7 +87,12 @@ print("On the other hand, the low is " + str(round(minTemp,2)) + " degrees Faren
 print("Additionally, the wind speed is " + str(windMPH) + " miles per hour.")
 print("Based on this data, the clothes you tell me you own, and my own amazing fashion sense, I suggest wearing one of these outfits: ")
 
-list_im = matches[random.randint(0,len(matches) - 1)]
+if len(matches) >= 1:
+    list_im = matches[random.randint(0,len(matches) - 1)]
+else:
+    print("No clothing matches found.")
+
+
 def displayImages(list_im):
     if len(list_im) > 2:
         img1 = cv2.imread(list_im[0])
@@ -102,7 +105,6 @@ def displayImages(list_im):
         vis[:h1, :w1] = img1
         vis[:h2, w1:w1+w2] = img2
         vis[:h3, w1+w2:w1+w2+w3] = img3
-
         cv2.imshow("Your Outfit!", vis)
     elif len(list_im) > 1:
         img1 = cv2.imread(list_im[0])
@@ -117,20 +119,9 @@ def displayImages(list_im):
     else:
         img = cv2.imread(list_im[0])
         cv2.imshow("Your Outfit!", img)
-    cv2.waitKey(2000)
-
-keyboard.add_hotkey('esc', quit)
+    cv2.waitKey(1500)
 
 for _ in range(len(matches)):
     thisOOTD = (matches[random.randint(0, len(matches) - 1)])
     displayImages(thisOOTD)
     matches.remove(thisOOTD)
-    #keyboard.wait('n')
-    #cv2.destroyAllWindows()
-
-'''while True:
-    cv2.destroyAllWindows()
-    list_im = matches[random.randint(0,len(matches) - 1)]
-    displayImages(list_im)
-    keyboard.wait('enter')
-cv2.destroyAllWindows()'''
