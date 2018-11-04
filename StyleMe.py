@@ -6,6 +6,9 @@ import random
 import cv2
 import keyboard
 
+# StyleMe v1.0.0
+# By Sahil Sanghvi and Jacqueline Zhang
+
 # Categories for the articles of clothing
 tops = ["tshirts", "tank tops", "blouses", "polos", "sweaters", "longsleeves"]
 outerwear = ["hoodies", "denimjacket", "bomberjackets", "regularjackets"]
@@ -35,7 +38,7 @@ def restrictOutfits(maxTemp, minTemp, windMPH):
     print("Hmm, let me think...")
     clothes = visRec()
     filteredOptions = []
-    if windMPH > 1:
+    if windMPH > 4:
         for i in clothes:
             for j in i:
                 if i.get(j) != "skirts" and i.get(j) != "dresses":
@@ -44,11 +47,11 @@ def restrictOutfits(maxTemp, minTemp, windMPH):
         filteredOptions = []
     print("Finding good clothes to wear given today's details...")
     if maxTemp > 85:
-        f = lambda x: x[1] == "denimshorts" or x[1] == "shorts" or x[1] == "tshirts" or x[1] == "polos" or x[1] == "skirts" or x[1] == "dresses"
+        f = lambda x: x[1] == "denimshorts" or x[1] == "shorts" or x[1] == "tshirts" or x[1] == "polos" or x[1] == "skirts" or x[1] == "dresses" or x[1] == "blouses"
     elif minTemp > 70:
         f = lambda x: x[1] != "denimjacket" and x[1] != "bomberjackets" and x[1] != "hoodies" and x[1] != "regularjackets"
     else:
-        f = lambda x: x[1] != "skirts" and x[1] != "dresses" and x[1] != "shorts" and x[1] != "tanktops" and x[1] != "denimshorts"
+        f = lambda x: x[1] != "skirts" and x[1] != "dresses" and x[1] != "shorts" and x[1] != "tanktops" and x[1] != "denimshorts" and x[1] != "tshirts" and x[1] != "blouses"
     for c in clothes:
         filteredOptions.extend(list(filter(f, c.items())))
     return filteredOptions
@@ -114,12 +117,20 @@ def displayImages(list_im):
     else:
         img = cv2.imread(list_im[0])
         cv2.imshow("Your Outfit!", img)
-    cv2.waitKey(0)
+    cv2.waitKey(2000)
 
 keyboard.add_hotkey('esc', quit)
-while True:
+
+for _ in range(len(matches)):
+    thisOOTD = (matches[random.randint(0, len(matches) - 1)])
+    displayImages(thisOOTD)
+    matches.remove(thisOOTD)
+    #keyboard.wait('n')
+    #cv2.destroyAllWindows()
+
+'''while True:
     cv2.destroyAllWindows()
     list_im = matches[random.randint(0,len(matches) - 1)]
     displayImages(list_im)
     keyboard.wait('enter')
-cv2.destroyAllWindows()
+cv2.destroyAllWindows()'''
