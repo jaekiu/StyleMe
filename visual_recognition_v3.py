@@ -29,6 +29,6 @@ def visRec():
                             tempMaxItem = d
                     thisItem = [tempMaxItem]
                 thisItem = thisItem[0].get('class')
-                print("visRec evaluated " + i + " as a(n) " + thisItem)
+                #print("visRec evaluated " + i + " as a(n) " + thisItem)
                 clothes.append({"assets/images/" + i: thisItem})
     return clothes
