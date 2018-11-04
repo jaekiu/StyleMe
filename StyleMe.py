@@ -1,6 +1,8 @@
 from pprint import pprint
 import requests
+import numpy as np
 from visual_recognition_v3 import visRec
+import random
 
 # Categories for the articles of clothing
 tops = ["tshirts", "tank tops", "blouses", "polos", "sweaters", "longsleeves"]
@@ -83,3 +85,8 @@ print("Additionally, the wind speed is " + str(windMPH) + " miles per hour.")
 print("Based on this data, the clothes you tell me you own, and my own amazing fashion sense, I suggest wearing one of these outfits: ")
 for m in matches:
     print(m)
+
+list_im = matches[random.randint(0,len(matches) - 1)]
+
+for i in list_im:
+     open(i, "r")
