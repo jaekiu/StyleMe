@@ -3,6 +3,7 @@ import requests
 import numpy as np
 from visual_recognition_v3 import visRec
 import random
+import cv2
 
 # Categories for the articles of clothing
 tops = ["tshirts", "tank tops", "blouses", "polos", "sweaters", "longsleeves"]
@@ -87,6 +88,38 @@ for m in matches:
     print(m)
 
 list_im = matches[random.randint(0,len(matches) - 1)]
+def displayImages(list_im):
+    if len(list_im) > 2:
+        img1 = cv2.imread(list_im[0])
+        img2 = cv2.imread(list_im[1])
+        img3 = cv2.imread(list_im[2])
+        h1, w1 = img1.shape[:2]
+        h2, w2 = img2.shape[:2]
+        h3, w3 = img3.shape[:2]
+        vis = np.zeros((max(h1, h2, h3), w1+w2+w3, 3), np.uint8)
+        vis[:h1, :w1] = img1
+        vis[:h2, w1:w1+w2] = img2
+        vis[:h3, w1:w1+w2+w3] = img3
 
-for i in list_im:
-     open(i, "r")
+        cv2.imshow("Your Outfit!", vis)
+    elif len(list_im) > 1:
+        img1 = cv2.imread(list_im[0])
+        img2 = cv2.imread(list_im[1])
+        h1, w1 = img1.shape[:2]
+        h2, w2 = img2.shape[:2]
+        vis = np.zeros((max(h1, h2), w1+w2, 3), np.uint8)
+        vis[:h1, :w1] = img1
+        vis[:h2, w1:w1+w2] = img2
+
+        cv2.imshow("Your Outfit!", vis)
+    else:
+        img = cv2.imread(list_im[0])
+        cv2.imshow("Your Outfit!", img)
+    cv2.waitKey(0)
+
+displayImages(list_im)
+#numpy_vertical_concat = np.concatenate((image, image2), axis=0)
+
+#cv2.imshow('Numpy Vertical Concat', numpy_vertical_concat)
+
+#cv2.waitKey(0)
