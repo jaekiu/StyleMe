@@ -4,6 +4,7 @@ import numpy as np
 from visual_recognition_v3 import visRec
 import random
 import cv2
+import keyboard
 
 # Categories for the articles of clothing
 tops = ["tshirts", "tank tops", "blouses", "polos", "sweaters", "longsleeves"]
@@ -84,8 +85,6 @@ print("Today's high is a nice " + str(round(maxTemp, 2)) + " degrees Farenheit."
 print("On the other hand, the low is " + str(round(minTemp,2)) + " degrees Farenheit.")
 print("Additionally, the wind speed is " + str(windMPH) + " miles per hour.")
 print("Based on this data, the clothes you tell me you own, and my own amazing fashion sense, I suggest wearing one of these outfits: ")
-for m in matches:
-    print(m)
 
 list_im = matches[random.randint(0,len(matches) - 1)]
 def displayImages(list_im):
@@ -117,10 +116,10 @@ def displayImages(list_im):
         cv2.imshow("Your Outfit!", img)
     cv2.waitKey(0)
 
-sahil = "1"
-while sahil == "1":
+keyboard.add_hotkey('esc', quit)
+while True:
     cv2.destroyAllWindows()
     list_im = matches[random.randint(0,len(matches) - 1)]
     displayImages(list_im)
-    sahil = input("Press 1 to continue: ")
+    keyboard.wait('enter')
 cv2.destroyAllWindows()
