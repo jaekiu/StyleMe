@@ -105,7 +105,6 @@ def displayImages(list_im):
         vis[:h1, :w1] = img1
         vis[:h2, w1:w1+w2] = img2
         vis[:h3, w1+w2:w1+w2+w3] = img3
-        cv2.imshow("Your Outfit!", vis)
     elif len(list_im) > 1:
         img1 = cv2.imread(list_im[0])
         img2 = cv2.imread(list_im[1])
@@ -114,11 +113,15 @@ def displayImages(list_im):
         vis = np.zeros((max(h1, h2), w1+w2, 3), np.uint8)
         vis[:h1, :w1] = img1
         vis[:h2, w1:w1+w2] = img2
-
-        cv2.imshow("Your Outfit!", vis)
     else:
-        img = cv2.imread(list_im[0])
-        cv2.imshow("Your Outfit!", img)
+        vis = cv2.imread(list_im[0])
+
+    # Resizing process
+    r = 700 / vis.shape[1]
+    dim = (700, int(vis.shape[0] * r))
+    # perform the actual resizing of the image and show it
+    resized = cv2.resize(vis, dim, interpolation = cv2.INTER_AREA)
+    cv2.imshow("Your Outfit!", resized)
     cv2.waitKey(1500)
 
 for _ in range(len(matches)):
