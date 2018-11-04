@@ -99,7 +99,7 @@ def displayImages(list_im):
         vis = np.zeros((max(h1, h2, h3), w1+w2+w3, 3), np.uint8)
         vis[:h1, :w1] = img1
         vis[:h2, w1:w1+w2] = img2
-        vis[:h3, w1+w2:w3] = img3
+        vis[:h3, w1+w2:w1+w2+w3] = img3
 
         cv2.imshow("Your Outfit!", vis)
     elif len(list_im) > 1:
@@ -119,6 +119,8 @@ def displayImages(list_im):
 
 sahil = "1"
 while sahil == "1":
+    cv2.destroyAllWindows()
     list_im = matches[random.randint(0,len(matches) - 1)]
     displayImages(list_im)
     sahil = input("Press 1 to continue: ")
+cv2.destroyAllWindows()
