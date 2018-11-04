@@ -4,6 +4,10 @@ import numpy as np
 from visual_recognition_v3 import visRec
 import random
 import cv2
+import keyboard
+
+# StyleMe v1.0.0
+# By Sahil Sanghvi and Jacqueline Zhang
 
 # Categories for the articles of clothing
 tops = ["tshirts", "tank tops", "blouses", "polos", "sweaters", "longsleeves"]
@@ -34,7 +38,7 @@ def restrictOutfits(maxTemp, minTemp, windMPH):
     print("Hmm, let me think...")
     clothes = visRec()
     filteredOptions = []
-    if windMPH > 1:
+    if windMPH > 4:
         for i in clothes:
             for j in i:
                 if i.get(j) != "skirts" and i.get(j) != "dresses":
@@ -43,11 +47,11 @@ def restrictOutfits(maxTemp, minTemp, windMPH):
         filteredOptions = []
     print("Finding good clothes to wear given today's details...")
     if maxTemp > 85:
-        f = lambda x: x[1] == "denimshorts" or x[1] == "shorts" or x[1] == "tshirts" or x[1] == "polos" or x[1] == "skirts" or x[1] == "dresses"
+        f = lambda x: x[1] == "denimshorts" or x[1] == "shorts" or x[1] == "tshirts" or x[1] == "polos" or x[1] == "skirts" or x[1] == "dresses" or x[1] == "blouses"
     elif minTemp > 70:
         f = lambda x: x[1] != "denimjacket" and x[1] != "bomberjackets" and x[1] != "hoodies" and x[1] != "regularjackets"
     else:
-        f = lambda x: x[1] != "skirts" and x[1] != "dresses" and x[1] != "shorts" and x[1] != "tanktops" and x[1] != "denimshorts"
+        f = lambda x: x[1] != "skirts" and x[1] != "dresses" and x[1] != "shorts" and x[1] != "tanktops" and x[1] != "denimshorts" and x[1] != "tshirts" and x[1] != "blouses"
     for c in clothes:
         filteredOptions.extend(list(filter(f, c.items())))
     return filteredOptions
@@ -84,8 +88,6 @@ print("Today's high is a nice " + str(round(maxTemp, 2)) + " degrees Farenheit."
 print("On the other hand, the low is " + str(round(minTemp,2)) + " degrees Farenheit.")
 print("Additionally, the wind speed is " + str(windMPH) + " miles per hour.")
 print("Based on this data, the clothes you tell me you own, and my own amazing fashion sense, I suggest wearing one of these outfits: ")
-for m in matches:
-    print(m)
 
 list_im = matches[random.randint(0,len(matches) - 1)]
 def displayImages(list_im):
@@ -115,12 +117,20 @@ def displayImages(list_im):
     else:
         img = cv2.imread(list_im[0])
         cv2.imshow("Your Outfit!", img)
-    cv2.waitKey(0)
+    cv2.waitKey(2000)
 
-sahil = "1"
-while sahil == "1":
+keyboard.add_hotkey('esc', quit)
+
+for _ in range(len(matches)):
+    thisOOTD = (matches[random.randint(0, len(matches) - 1)])
+    displayImages(thisOOTD)
+    matches.remove(thisOOTD)
+    #keyboard.wait('n')
+    #cv2.destroyAllWindows()
+
+'''while True:
     cv2.destroyAllWindows()
     list_im = matches[random.randint(0,len(matches) - 1)]
     displayImages(list_im)
-    sahil = input("Press 1 to continue: ")
-cv2.destroyAllWindows()
+    keyboard.wait('enter')
+cv2.destroyAllWindows()'''
