@@ -3,7 +3,7 @@ import requests
 from visual_recognition_v3 import visRec
 
 # Categories for the articles of clothing
-tops = ["tshirts", "tanktops", "blouses", "polos", "sweaters", "longsleeves"]
+tops = ["tshirts", "tank tops", "blouses", "polos", "sweaters", "longsleeves"]
 outerwear = ["hoodies", "denimjacket", "bomberjackets", "regularjackets"]
 bottoms = ["skirts", "denimshorts", "shorts", "regularpants", "jeans"]
 dresses = ["dresses"]
@@ -28,6 +28,7 @@ minTemp = KelvinToFaren(minKelvin)
 
 # Determines which articles of clothing we will restrict
 def restrictOutfits(maxTemp, minTemp, windMPH):
+    print("Hmm, let me think...")
     clothes = visRec()
     filteredOptions = []
     if windMPH > 1:
@@ -37,6 +38,7 @@ def restrictOutfits(maxTemp, minTemp, windMPH):
                     filteredOptions.append(i)
         clothes = filteredOptions
         filteredOptions = []
+    print("Finding good clothes to wear given today's details...")
     if maxTemp > 85:
         f = lambda x: x[1] == "denimshorts" or x[1] == "shorts" or x[1] == "tshirts" or x[1] == "polos" or x[1] == "skirts" or x[1] == "dresses"
     elif minTemp > 70:
@@ -47,12 +49,37 @@ def restrictOutfits(maxTemp, minTemp, windMPH):
         filteredOptions.extend(list(filter(f, c.items())))
     return filteredOptions
 
+
 def pairOutfits():
     outfits = restrictOutfits(maxTemp, minTemp, windMPH)
-    print(maxTemp)
-    print(minTemp)
-    print(windMPH)
-    for c in outfits:
-        print(c)
+    print("Combining clothes in new and interesting ways...")
+    matchedOutfits = []
 
-pairOutfits()
+    for o in outfits:
+        if o[1] == 'dresses':
+            matchedOutfits.append([o[0]])
+        elif o[1] in bottoms:
+            for t in [y[0] for y in outfits if y[1] in tops]:
+                matchedOutfits.append([o[0], t])
+
+
+    print("Checking out your jacket collection...")
+    temp = []
+    for outer in [o for o in outfits if o[1] in outerwear]:
+        for other in matchedOutfits:
+            temp2 = other[:]
+            temp2.append(outer[0])
+            temp.append(temp2)
+    matchedOutfits.extend(temp)
+    return matchedOutfits
+
+
+matches = pairOutfits()
+
+
+print("Today's high is a nice " + str(round(maxTemp, 2)) + " degrees Farenheit.")
+print("On the other hand, the low is " + str(round(minTemp,2)) + " degrees Farenheit.")
+print("Additionally, the wind speed is " + str(windMPH) + " miles per hour.")
+print("Based on this data, the clothes you tell me you own, and my own amazing fashion sense, I suggest wearing one of these outfits: ")
+for m in matches:
+    print(m)
