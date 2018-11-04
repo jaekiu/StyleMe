@@ -87,7 +87,7 @@ print("Based on this data, the clothes you tell me you own, and my own amazing f
 for m in matches:
     print(m)
 
-list_im = matches[random.randint(0,len(matches) - 1)]
+#list_im = matches[random.randint(0,len(matches) - 1)]
 def displayImages(list_im):
     if len(list_im) > 2:
         img1 = cv2.imread(list_im[0])
@@ -99,7 +99,7 @@ def displayImages(list_im):
         vis = np.zeros((max(h1, h2, h3), w1+w2+w3, 3), np.uint8)
         vis[:h1, :w1] = img1
         vis[:h2, w1:w1+w2] = img2
-        vis[:h3, w1:w1+w2+w3] = img3
+        vis[:h3, w1+w2:w3] = img3
 
         cv2.imshow("Your Outfit!", vis)
     elif len(list_im) > 1:
@@ -117,9 +117,17 @@ def displayImages(list_im):
         cv2.imshow("Your Outfit!", img)
     cv2.waitKey(0)
 
-displayImages(list_im)
-#numpy_vertical_concat = np.concatenate((image, image2), axis=0)
-
-#cv2.imshow('Numpy Vertical Concat', numpy_vertical_concat)
-
-#cv2.waitKey(0)
+<<<<<<< HEAD
+try:
+    while True:
+        input("Press Enter to continue...")
+        displayImages(matches[random.randint(0,len(matches) - 1)])
+except KeyboardInterrupt:
+    pass
+=======
+sahil = "1"
+while sahil == "1":
+    list_im = matches[random.randint(0,len(matches) - 1)]
+    displayImages(list_im)
+    sahil = input("Press 1 to continue: ")
+>>>>>>> 064d2ab73d1783ba9fb6ae1e8daa7d7eecfb3284
