@@ -11,6 +11,8 @@ We all have those days when we wake up and don't know what to wear. We want to b
 1. User must input a valid city name when confronted with this prompt:
 ```What city are you in?```
 1. Let the code run!
+The output should look something like the following:
+![sampleoutput](45353034_1624442727661494_5600574076230828032_n.png)
 
 ### How Does This Work
 Using **IBM Watson's Vision Recognition API**, we created a **custom classifier** and trained it with over **1100 images**. These images were grouped by article of clothing, and a vast majority of images from different backgrounds, angles, etc. were included in order to maximize accuracy. 
